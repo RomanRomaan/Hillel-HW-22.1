@@ -1,4 +1,5 @@
 import './styles.css';
+import $ from 'jquery';
 const form = document.querySelector('.form.js--form');
 const formBtn = document.querySelector('.form__btn');
 const ulWrapper = document.querySelector('.js--todos-wrapper');
