@@ -10,39 +10,31 @@ module.exports = {
     entry: './src/script.js',
     output: {
         filename: 'bundle.js',
-        path: path.resolve(__dirname, 'dist'),
+        path: path.resolve(__dirname, 'docs'), // ← было 'dist'
         clean: true,
         assetModuleFilename: 'assets/[name][ext]'
     },
     module: {
         rules: [
-            {
-                test: /\.css$/i,
-                use: [MiniCssExtractPlugin.loader, 'css-loader']
-            },
-            {
-                test: /\.(png|jpe?g|gif|svg|webp)$/i,
-                type: 'asset/resource'
-            }
+            { test: /\.css$/i, use: [MiniCssExtractPlugin.loader, 'css-loader'] },
+            { test: /\.(png|jpe?g|gif|svg|webp)$/i, type: 'asset/resource' }
         ]
     },
     plugins: [
         new MiniCssExtractPlugin({ filename: 'styles.css' }),
         new HtmlWebpackPlugin({
-            template: './src/index.html',   // 👈 указываем правильный путь
+            template: './src/index.html',
+            filename: 'index.html',
             inject: 'body'
         })
     ],
     optimization: {
         minimize: true,
-        minimizer: [
-            new TerserPlugin({ extractComments: false }),
-            new CssMinimizerPlugin()
-        ],
+        minimizer: [new TerserPlugin({ extractComments: false }), new CssMinimizerPlugin()],
         concatenateModules: true
     },
     devServer: {
-        static: { directory: path.resolve(__dirname, 'dist') }, // теперь сервер будет брать index.html из dist
+        static: { directory: path.resolve(__dirname, 'docs') }, // ← было 'dist'
         port: 8080,
         open: true,
         hot: false,
